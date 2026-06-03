@@ -1,7 +1,3 @@
-#include <vector>
-#include <algorithm>
-using namespace std;
-
 class Solution {
 public:
     int maxArea(vector<int>& height) {
@@ -12,9 +8,9 @@ public:
         while (left < right) {
             int width = right - left;
             int h = min(height[left], height[right]);
+
             maxWater = max(maxWater, width * h);
 
-            // Move the pointer at the shorter line
             if (height[left] < height[right]) {
                 left++;
             } else {
