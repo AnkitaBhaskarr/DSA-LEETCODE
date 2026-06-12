@@ -1,28 +1,21 @@
-#include <vector>
-#include <string>
-using namespace std;
-
 class Solution {
 public:
     int compress(vector<char>& chars) {
-        int write = 0;
-        int read = 0;
         int n = chars.size();
+        int write = 0;
+        int i = 0;
 
-        while (read < n) {
-            char current = chars[read];
+        while (i < n) {
+            char curr = chars[i];
             int count = 0;
 
-            // Count consecutive characters
-            while (read < n && chars[read] == current) {
-                read++;
+            while (i < n && chars[i] == curr) {
                 count++;
+                i++;
             }
 
-            // Write the character
-            chars[write++] = current;
+            chars[write++] = curr;
 
-            // Write the count if greater than 1
             if (count > 1) {
                 string cnt = to_string(count);
                 for (char c : cnt) {
