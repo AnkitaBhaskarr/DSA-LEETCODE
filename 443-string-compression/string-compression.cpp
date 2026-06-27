@@ -1,29 +1,38 @@
 class Solution {
 public:
     int compress(vector<char>& chars) {
-        int n = chars.size();
-        int write = 0;
         int i = 0;
+        int ansIndex = 0;
+        int n = chars.size();
 
-        while (i < n) {
-            char curr = chars[i];
-            int count = 0;
-
-            while (i < n && chars[i] == curr) {
-                count++;
-                i++;
+        while(i<n)
+        {
+            int j = i+1;
+            while(j<n && chars[i] == chars[j])
+            {
+                j++;
             }
+            // yaha kb aaoge
+            // ya to vector pura traverse krdia
+            // ya to fir new/different character encounter kia h
 
-            chars[write++] = curr;
+            // oldChar store krlo
+            chars[ansIndex++] = chars[i];
 
-            if (count > 1) {
+            int count = j-i;
+
+            if(count > 1) {
+                // converting counting into single digit and saving in answer
                 string cnt = to_string(count);
-                for (char c : cnt) {
-                    chars[write++] = c;
+                for(char ch: cnt)
+                {
+                    chars[ansIndex++] = ch;
                 }
             }
-        }
+            i=j;
 
-        return write;
+        }
+        return ansIndex;
+        
     }
 };
