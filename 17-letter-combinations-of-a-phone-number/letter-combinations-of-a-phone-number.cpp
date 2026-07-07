@@ -22,7 +22,8 @@ public:
         vector<string> ans;
         if(digits.length()==0)
             return ans;
-        string output;
+
+        string output = "";
         int index = 0;
         string mapping[10] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
         solve(digits, output, index, ans, mapping);
