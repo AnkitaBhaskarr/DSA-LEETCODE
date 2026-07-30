@@ -1,15 +1,22 @@
 class Solution {
 public:
     bool containsDuplicate(vector<int>& nums) {
-        unordered_set<int> seen;
 
+        // Create a HashSet to store elements from the array
+        unordered_set<int> seenNumbers;
+
+        // Iterate through each element in the array
         for (int num : nums) {
-            if (seen.count(num)) {
-                return true;
+
+            // Check if the element is already in the HashSet
+            if (seenNumbers.find(num) != seenNumbers.end()) {
+                return true;   // Duplicate found
             }
-            seen.insert(num);
+
+            // Add the element to the HashSet
+            seenNumbers.insert(num);
         }
 
-        return false;
+        return false;   // No duplicates found
     }
 };
