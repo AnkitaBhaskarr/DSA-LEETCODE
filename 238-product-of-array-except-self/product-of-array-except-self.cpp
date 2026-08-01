@@ -1,26 +1,26 @@
-#include <vector>
-using namespace std;
-
 class Solution {
 public:
     vector<int> productExceptSelf(vector<int>& nums) {
+
         int n = nums.size();
-        vector<int> answer(n, 1);
 
-        // Compute left products
-        int left = 1;
+        vector<int> result(n, 1);
+
+        int pre = 1;
+        int post = 1;
+
+        // Store prefix products
         for (int i = 0; i < n; i++) {
-            answer[i] = left;
-            left *= nums[i];
+            result[i] = pre;
+            pre *= nums[i];
         }
 
-        // Compute right products
-        int right = 1;
+        // Multiply with postfix products
         for (int i = n - 1; i >= 0; i--) {
-            answer[i] *= right;
-            right *= nums[i];
+            result[i] *= post;
+            post *= nums[i];
         }
 
-        return answer;
+        return result;
     }
 };
