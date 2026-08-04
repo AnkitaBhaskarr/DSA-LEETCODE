@@ -1,55 +1,48 @@
-class Solution {
-private:
-    bool checkEqual(int a[26], int b[26])
-    {
-        for(int i=0; i<26; i++) {
-            if(a[i] != b[i])
-                return 0;
-        }
-        return 1;
-    }    
+ class Solution {
 public:
     bool checkInclusion(string s1, string s2) {
 
-        // character count array
-        int count1[26] = {0};
-
-        for(int i=0; i<s1.length(); i++) {
-            int index = s1[i] - 'a';
-            count1[index]++;
+        if (s1.length() > s2.length()) {
+            return false;
         }
 
-        // traverse s2 string in window of size s1 length and compare
+        vector<int> s1Map(26, 0);
+        vector<int> s2Map(26, 0);
 
-        int i=0;
-        int windowSize = s1.length();
-        int count2[26] = {0};
-
-        // running for first window
-        while(i < windowSize && i<s2.length()) {
-            int index = s2[i] - 'a';
-            count2[index]++;
-            i++;
+        // Initialize frequency maps for s1 and the first window of s2
+        for (int i = 0; i < s1.length(); i++) {
+            s1Map[s1[i] - 'a']++;
+            s2Map[s2[i] - 'a']++;
         }
 
-        if( checkEqual(count1, count2) )
-           return 1;
+        // Slide the window through s2 and compare the maps
+        for (int i = 0; i < s2.length() - s1.length(); i++) {
 
-        // aage window process kro
-        while(i<s2.length()) {
-            char newChar = s2[i];
-            int index = newChar - 'a';
-            count2[index]++;
+            if (matches(s1Map, s2Map)) {
+                return true;
+            }
 
-            char oldChar = s2[i-windowSize];
-            index = oldChar - 'a';
-            count2[index]--;
+            // Add new character to the window
+            s2Map[s2[i + s1.length()] - 'a']++;
 
-            i++;
-
-            if( checkEqual(count1, count2) )
-            return 1;
+            // Remove old character from the window
+            s2Map[s2[i] - 'a']--;
         }
-        return 0;
+
+        // Check the last window
+        return matches(s1Map, s2Map);
     }
-};    
+
+private:
+    // Helper function to compare two frequency maps
+    bool matches(vector<int>& s1Map, vector<int>& s2Map) {
+
+        for (int i = 0; i < 26; i++) {
+            if (s1Map[i] != s2Map[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
