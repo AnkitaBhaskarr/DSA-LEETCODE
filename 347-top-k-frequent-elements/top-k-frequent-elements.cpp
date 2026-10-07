@@ -1,40 +1,25 @@
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> freq;
 
-        if (k == nums.size())
-            return nums;
-
-        unordered_map<int, int> count;
-
-        // Count frequency of each element
-        for (int num : nums) {
-            count[num]++;
+        for(int x : nums) {
+            freq[x]++;
         }
 
-        // Min Heap based on frequency
-        auto cmp = [&](int a, int b) {
-            return count[a] > count[b];
-        };
+        priority_queue<pair<int, int>> pq;
 
-        priority_queue<int, vector<int>, decltype(cmp)> heap(cmp);
-
-        // Keep only k most frequent elements
-        for (auto &it : count) {
-            heap.push(it.first);
-
-            if (heap.size() > k) {
-                heap.pop();
-            }
+        for(auto x : freq) {
+            pq.push({x.second, x.first});
         }
 
         vector<int> ans;
 
-        while (!heap.empty()) {
-            ans.push_back(heap.top());
-            heap.pop();
+        for(int i=0; i<k; i++) {
+            ans.push_back(pq.top().second);
+            pq.pop();
         }
-
         return ans;
+        
     }
 };
